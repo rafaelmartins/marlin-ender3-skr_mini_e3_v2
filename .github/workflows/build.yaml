@@ -1,0 +1,29 @@
+name: build
+on:
+  - push
+  - workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Check out Marlin
+        uses: actions/checkout@v2
+        with:
+          repository: MarlinFirmware/Marlin
+          ref: bugfix-2.0.x
+
+      - name: Check out configuration
+        uses: actions/checkout@v2
+        with:
+          path: marlin-ender3-skr_mini_e3_v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Build
+        run: |
+          pip install platformio

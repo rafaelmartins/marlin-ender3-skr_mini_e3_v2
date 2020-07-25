@@ -29,3 +29,14 @@ jobs:
           pip install platformio
           cp -v marlin-ender3-skr_mini_e3_v2/*.h Marlin/
           platformio run --environment STM32F103RC_btt_512K
+
+      - name: Upload
+        run: |
+          pushd .pio/build/STM32F103RC_btt_512K > /dev/null
+          curl "${{ secrets.DISTFILES_URL }}" \
+              -F "file=@firmware.bin" \
+              -F "project=marlin-ender3-skr_mini_e3_v2" \
+              -F "version=$(date -u '+%+4Y%m%d%H%M%S')" \
+              -F "sha512=$(sha512sum firmware.bin)" \
+              -F "extract=false"
+          popd > /dev/null

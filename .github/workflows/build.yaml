@@ -27,3 +27,5 @@ jobs:
       - name: Build
         run: |
           pip install platformio
+          cp -v marlin-ender3-skr_mini_e3_v2/*.h .
+          platformio run --environment STM32F103RC_btt_512K

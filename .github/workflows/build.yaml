@@ -5,14 +5,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Check out Marlin
         uses: actions/checkout@v2
         with:
           repository: MarlinFirmware/Marlin
-          ref: bugfix-2.0.x
+          ref: 2.0.6.1
 
       - name: Check out configuration
         uses: actions/checkout@v2

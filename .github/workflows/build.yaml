@@ -5,38 +5,28 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Check out Marlin
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: MarlinFirmware/Marlin
-          ref: 2.0.6.1
+          ref: 2.1.2.1
 
       - name: Check out configuration
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: marlin-ender3-skr_mini_e3_v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.7'
 
       - name: Build
         run: |
           pip install platformio
           cp -v marlin-ender3-skr_mini_e3_v2/*.h Marlin/
-          platformio run --environment STM32F103RC_btt_512K
+          platformio run --environment STM32F103RC_btt
 
       - name: Upload
-        run: |
-          pushd .pio/build/STM32F103RC_btt_512K > /dev/null
-          curl "${{ secrets.DISTFILES_URL }}" \
-              -F "file=@firmware.bin" \
-              -F "project=marlin-ender3-skr_mini_e3_v2" \
-              -F "version=$(date -u '+%Y%m%d%H%M%S')" \
-              -F "sha512=$(sha512sum firmware.bin)" \
-              -F "extract=false"
-          popd > /dev/null
+        uses: actions/upload-artifact@v3
+        with:
+          name: firmware
+          path: .pio/build/STM32F103RC_btt/firmware.bin

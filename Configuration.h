@@ -1486,7 +1486,7 @@
  *     O-- FRONT --+
  */
 // FIXME!!
-#define NOZZLE_TO_PROBE_OFFSET { -44.3, 07.2, -3.85 }
+#define NOZZLE_TO_PROBE_OFFSET { -41, -29.5, -3.85 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
@@ -2511,7 +2511,9 @@
 //
 //  Set this option if CLOCKWISE causes values to DECREASE
 //
-//#define REVERSE_ENCODER_DIRECTION
+// rafaelmartins: I replaced the original display encoder with a PEC11R-4215K-S0024
+//                due to hardware failure.
+#define REVERSE_ENCODER_DIRECTION
 
 //
 // This option reverses the encoder direction for navigating LCD menus.
